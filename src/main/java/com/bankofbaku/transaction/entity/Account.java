@@ -20,6 +20,7 @@ public class Account {
     private Long accountId;
     private Long clientId;
     private LocalDateTime openDate;
+    @Enumerated(EnumType.STRING)
     private EAccountType accountType;
     @ManyToOne(fetch = FetchType.LAZY)
     private Client client;

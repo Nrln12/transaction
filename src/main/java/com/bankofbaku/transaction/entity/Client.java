@@ -1,9 +1,11 @@
 package com.bankofbaku.transaction.entity;
 
 import com.bankofbaku.transaction.enums.EGender;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -20,7 +22,10 @@ public class Client {
     private Long clientId;
     private String username;
     private String password;
+    @Enumerated(EnumType.STRING)
     private EGender gender;
+    @Column(name = "my_date", columnDefinition = "DATETIME")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime birthdate;
     private String name;
     private String surname;

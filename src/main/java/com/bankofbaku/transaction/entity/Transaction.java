@@ -17,6 +17,7 @@ public class Transaction {
     private Long transactionId;
     private LocalDateTime date;
     private Double amount;
+    @Enumerated(EnumType.STRING)
     private EStatus status;
     @ManyToOne
     @JoinColumn(name="sender_account")

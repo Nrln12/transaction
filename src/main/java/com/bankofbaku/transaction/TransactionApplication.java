@@ -7,11 +7,12 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class TransactionApplication {
+	@Bean
+	public ModelMapper modelMapper(){
+		return new ModelMapper();
+	}
 	public static void main(String[] args) {
 		SpringApplication.run(TransactionApplication.class, args);
 	}
-	@Bean
-	public ModelMapper getModelMapper(){
-		return new ModelMapper();
-	}
+
 }
