@@ -18,6 +18,8 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long accountId;
+
+    private Long accountCode;
     private Long clientId;
     private LocalDateTime openDate;
     @Enumerated(EnumType.STRING)
@@ -26,7 +28,6 @@ public class Account {
     private Client client;
     @OneToMany(mappedBy="senderAccount", fetch = FetchType.EAGER)
     private List<Transaction> senders;
-
     @OneToMany(mappedBy="receiverAccount", fetch = FetchType.EAGER)
     private List<Transaction> receivers;
 }

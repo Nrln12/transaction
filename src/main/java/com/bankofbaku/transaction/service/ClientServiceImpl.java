@@ -11,7 +11,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ClientServiceImpl implements ClientService{
@@ -26,6 +28,14 @@ public class ClientServiceImpl implements ClientService{
         if(!client.isPresent()) throw new NotFoundException("User has not found");
         return mapper.map(client, ClientDto.class);
     }
+
+    @Override
+    public List<ClientDto> getAllClients() {
+        List<ClientDto> clientDtos = clientRepository.findAll().stream().map(client -> mapper.map(client, ClientDto.class)).collect(Collectors.toList());
+        if (clientDtos.isEmpty()) throw new NotFoundException("There is no client");
+        return clientDtos;
+    }
+
     @Override
     public ClientDto addClient(ClientDto clientDto) throws Exception {
         Optional<Client> checkClient = Optional.ofNullable(clientRepository.findClientByUsername(clientDto.getUsername()));
@@ -40,8 +50,6 @@ public class ClientServiceImpl implements ClientService{
         }
         return clientDto;
     }
-
-
     public boolean isValidUsername(String username){
         String regex = "^[a-zA-Z0-9._-]{3,}$";
         return username.matches(regex) ? true : false;

@@ -5,10 +5,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -24,9 +23,9 @@ public class Client {
     private String password;
     @Enumerated(EnumType.STRING)
     private EGender gender;
-    @Column(name = "my_date", columnDefinition = "DATETIME")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDateTime birthdate;
+    @Column(name = "birthdate", columnDefinition = "DATE")
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private Date birthdate;
     private String name;
     private String surname;
     private String middlename;
