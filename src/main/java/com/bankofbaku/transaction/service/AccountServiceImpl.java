@@ -77,6 +77,6 @@ public class AccountServiceImpl implements AccountService{
 
     public Long randomNumberGenerator(){
         Random random = new Random();
-        return random.nextLong();
+        return Math.abs(random.nextLong());
     }
 }
