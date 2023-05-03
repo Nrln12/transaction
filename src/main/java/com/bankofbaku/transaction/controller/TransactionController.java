@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class TransactionController {
     private final TransactionService transactionService;
 
-    @GetMapping("/receieverId/{receieverId}")
-    public ResponseEntity getReceieverTransaction(@PathVariable Long receieverId){
-        return ResponseEntity.ok().body(transactionService.getTransactionByReceiverId(receieverId));
+    @GetMapping("/receiverId/{receiverId}")
+    public ResponseEntity getTransactionByReceiverId(@PathVariable("receiverId") Long receiverId){
+        return ResponseEntity.ok().body(transactionService.getTransactionByReceiverId(receiverId));
     }
     @GetMapping()
     public ResponseEntity getTransaction(){

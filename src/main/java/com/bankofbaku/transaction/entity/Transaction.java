@@ -11,6 +11,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "transaction")
+@NamedStoredProcedureQueries({
+        @NamedStoredProcedureQuery(name="getTransactionByReceiverId", procedureName = "getTransactionByReceiverId", resultClasses = Transaction.class, parameters = {
+                @StoredProcedureParameter(mode=ParameterMode.IN, name="receiverId", type=Long.class)
+        })
+})
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
