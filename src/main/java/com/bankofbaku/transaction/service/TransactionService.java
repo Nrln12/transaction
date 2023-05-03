@@ -13,7 +13,7 @@ import java.util.List;
 public interface TransactionService {
     //TransactionDto addTransaction(TransactionDto transactionDto);
 
-    List<TransactionDto> getTransactionByReceiverId(Long receiverId);
-    String getTransactions();
+//    List<TransactionDto> getTransactionByReceiverId(Long receiverId);
+    Long getAmountByAccount(Double id);
 }
 

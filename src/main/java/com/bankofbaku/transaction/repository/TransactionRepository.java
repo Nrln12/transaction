@@ -10,9 +10,22 @@ import org.springframework.data.jpa.repository.query.Procedure;
 import java.util.List;
 
 public interface TransactionRepository extends JpaRepository<Transaction,Long> {
-    @Procedure(name="getTransactionByReceiverId")
-    List<Transaction> getTransactionByReceiverId(Long receiverId);
-   @Modifying
-    @Query(value = "select get_tr)", nativeQuery = true)
-    String getTransactions();
+    @Query(value = "select getCirc(?)", nativeQuery = true)
+    Long getAmountByAccount(Double id);
 }
+/*
+delimiter //
+create function getCirc(id bigint)
+returns double  reads sql data
+begin
+	declare circ double;
+    declare all_amount_pos double;
+    declare all_amount_neg double;
+    select sum(amount) into all_amount_pos from transaction where receiver_account=id AND status = 'SUCCESS';
+    select (-1)*sum(amount) into all_amount_neg from transaction where sender_account=id AND status = 'SUCCESS';
+	set circ = all_amount_pos + all_amount_neg;
+    return circ;
+end //
+delimiter ;
+select getCirc(3);
+ */
