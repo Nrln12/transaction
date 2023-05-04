@@ -22,32 +22,10 @@ import static com.bankofbaku.transaction.enums.EOperationType.*;
 public class TransactionServiceImpl implements TransactionService{
     private final TransactionRepository transactionRepository;
     private final ModelMapper mapper;
-//    @PersistenceContext
-//    @Autowired
-//    private EntityManager em;
     public TransactionServiceImpl(TransactionRepository transactionRepository, ModelMapper mapper){
         this.transactionRepository=transactionRepository;
         this.mapper=mapper;
     }
-//        @Override
-//    public List<TransactionDto> getTransactionByReceiverId(Long receieverId) {
-//        List<TransactionDto> transactions = transactionRepository.getTransactionByReceiverId(receieverId).stream()
-//                .map(transaction -> mapper.map(transaction, TransactionDto.class))
-//                .collect(Collectors.toList());
-//        transactions.stream().forEach(transactionDto -> transactionDto.setOperationType(DEBIT));
-//        return transactions;
-//    }
-
-//    @Override
-//    public List<TransactionDto> getTransactionByReceiverId(Long receiverId) {
-//        List<TransactionDto> transactionDtos = (List<TransactionDto>) em.createNamedStoredProcedureQuery("getTransactionByReceiverId").setParameter("receiverId",receiverId)
-//                .getResultList().stream().map(transaction-> mapper.map(transaction,TransactionDto.class)).collect(Collectors.toList());
-//        if(transactionDtos.isEmpty()){
-//            throw new NotFoundException("Transaction doesn't exist");
-//        }
-//        return transactionDtos;
-//
-//    }
 
     @Override
     public List<TransactionDto> getTransactionByReceiverAccountAccountId(Long receiverId) {
