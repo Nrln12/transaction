@@ -2,6 +2,7 @@ package com.bankofbaku.transaction.service;
 
 import com.bankofbaku.transaction.dto.TransactionDto;
 import com.bankofbaku.transaction.entity.Transaction;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,8 @@ import java.util.List;
 public interface TransactionService {
     //TransactionDto addTransaction(TransactionDto transactionDto);
 
-//    List<TransactionDto> getTransactionByReceiverId(Long receiverId);
-    Long getAmountByAccount(Double id);
+    List<TransactionDto> getTransactionByReceiverAccountAccountId(Long receiverId);
+    List<TransactionDto> getTransactionBySenderAccountAccountId(Long senderId);
+    Double getAmountByAccount(Double id);
 }
 

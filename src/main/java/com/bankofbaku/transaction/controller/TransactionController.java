@@ -14,10 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class TransactionController {
     private final TransactionService transactionService;
 
-//    @GetMapping("/receiverId/{receiverId}")
-//    public ResponseEntity getTransactionByReceiverId(@PathVariable("receiverId") Long receiverId){
-//        return ResponseEntity.ok().body(transactionService.getTransactionByReceiverId(receiverId));
-//    }
+    @GetMapping("/receiverId/{receiverId}")
+    public ResponseEntity getTransactionByReceiverId(@PathVariable("receiverId") Long receiverId){
+        return ResponseEntity.ok().body(transactionService.getTransactionByReceiverAccountAccountId(receiverId));
+    }
+    @GetMapping("/senderId/{senderId}")
+    public ResponseEntity getTransactionBySenderAccountAccountId(@PathVariable("senderId") Long senderId){
+        return ResponseEntity.ok().body(transactionService.getTransactionBySenderAccountAccountId(senderId));
+    }
     @GetMapping("/getAmount/{id}")
     public ResponseEntity getCirc(@PathVariable Double id){
         return ResponseEntity.ok().body(transactionService.getAmountByAccount(id));

@@ -50,7 +50,25 @@ public class TransactionServiceImpl implements TransactionService{
 //    }
 
     @Override
-    public Long getAmountByAccount(Double id) {
+    public List<TransactionDto> getTransactionByReceiverAccountAccountId(Long receiverId) {
+        List<Transaction> transactions = transactionRepository.getTransactionByReceiverAccountAccountId(receiverId);
+        if(transactions.isEmpty()) throw new NotFoundException("Invalid receiver account id");
+        List<TransactionDto> transactionDtos = transactions.stream().map(transaction -> mapper.map(transaction, TransactionDto.class)).collect(Collectors.toList());
+        transactionDtos.forEach(transactionDto -> transactionDto.setOperationType(DEBIT));
+        return transactionDtos;
+    }
+
+    @Override
+    public List<TransactionDto> getTransactionBySenderAccountAccountId(Long senderId) {
+        List<Transaction> transactions = transactionRepository.getTransactionBySenderAccountAccountId(senderId);
+        if(transactions.isEmpty()) throw new NotFoundException("Invalid sender account id");
+        List<TransactionDto> transactionDtos = transactions.stream().map(transaction -> mapper.map(transaction, TransactionDto.class)).collect(Collectors.toList());
+        transactionDtos.forEach(transactionDto -> transactionDto.setOperationType(CREDIT));
+        return transactionDtos;
+    }
+
+    @Override
+    public Double getAmountByAccount(Double id) {
         return transactionRepository.getAmountByAccount(id);
     }
 
