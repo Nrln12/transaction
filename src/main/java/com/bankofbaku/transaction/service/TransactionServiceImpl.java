@@ -3,6 +3,8 @@ package com.bankofbaku.transaction.service;
 import com.bankofbaku.transaction.dto.TransactionDto;
 import com.bankofbaku.transaction.entity.Transaction;
 import com.bankofbaku.transaction.enums.EOperationType;
+import com.bankofbaku.transaction.enums.EStatus;
+import com.bankofbaku.transaction.exception.IsNotValidException;
 import com.bankofbaku.transaction.exception.NotFoundException;
 import com.bankofbaku.transaction.repository.TransactionRepository;
 import org.modelmapper.ModelMapper;
@@ -31,7 +33,9 @@ public class TransactionServiceImpl implements TransactionService{
     public List<TransactionDto> getTransactionByReceiverAccountAccountId(Long receiverId) {
         List<Transaction> transactions = transactionRepository.getTransactionByReceiverAccountAccountId(receiverId);
         if(transactions.isEmpty()) throw new NotFoundException("Invalid receiver account id");
-        List<TransactionDto> transactionDtos = transactions.stream().map(transaction -> mapper.map(transaction, TransactionDto.class)).collect(Collectors.toList());
+        List<TransactionDto> transactionDtos = transactions.stream()
+                        .filter(transaction -> transaction.getStatus().equals(EStatus.SUCCESS))
+                                .map(transaction -> mapper.map(transaction, TransactionDto.class)).collect(Collectors.toList());
         transactionDtos.forEach(transactionDto -> transactionDto.setOperationType(DEBIT));
         return transactionDtos;
     }
@@ -40,10 +44,13 @@ public class TransactionServiceImpl implements TransactionService{
     public List<TransactionDto> getTransactionBySenderAccountAccountId(Long senderId) {
         List<Transaction> transactions = transactionRepository.getTransactionBySenderAccountAccountId(senderId);
         if(transactions.isEmpty()) throw new NotFoundException("Invalid sender account id");
-        List<TransactionDto> transactionDtos = transactions.stream().map(transaction -> mapper.map(transaction, TransactionDto.class)).collect(Collectors.toList());
+        List<TransactionDto> transactionDtos = transactions.stream()
+                        .filter(transaction -> transaction.getStatus().equals(EStatus.SUCCESS))
+                .map(transaction -> mapper.map(transaction, TransactionDto.class)).collect(Collectors.toList());
         transactionDtos.forEach(transactionDto -> transactionDto.setOperationType(CREDIT));
         return transactionDtos;
     }
+
 
     @Override
     public Double getAmountByAccount(Double id) {
